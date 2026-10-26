@@ -1,0 +1,229 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --sage-bg: #d1e2d3;
+  --forest: #4a6b4d;
+  --olive: #6b7d52;
+  --terracotta: #c87f5a;
+  --terracotta-dark: #a8623f;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overscroll-behavior: none;
+}
+
+body {
+  font-family: 'Quicksand', system-ui, -apple-system, sans-serif;
+  background: #0f1a14;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.font-hand {
+  font-family: 'Caveat', cursive;
+}
+
+/* Water particle animation — droplets fall from above onto the plant */
+@keyframes water-fall {
+  0% {
+    transform: translateY(-10px) scale(1);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(180px) scale(0.6);
+    opacity: 0;
+  }
+}
+
+.water-particle {
+  animation: water-fall 1s ease-in forwards;
+}
+
+/* Radial water burst from the center of the plant */
+@keyframes water-burst {
+  0% {
+    transform: translate(0, 0) scale(0.4);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--tx), var(--ty)) scale(0.7);
+    opacity: 0;
+  }
+}
+
+.water-burst {
+  animation: water-burst 0.9s ease-out forwards;
+}
+
+/* Realistic rain droplets falling from the top of the plant toward the pot */
+@keyframes rain-drop {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(var(--fall, 320px)) scale(0.5);
+    opacity: 0;
+  }
+}
+
+.rain-drop {
+  animation: rain-drop 1.2s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+}
+
+/* Joy bounce for the whole Brotito avatar after watering */
+@keyframes joy-bounce {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  20% {
+    transform: translateY(-14px) scale(1.04);
+  }
+  40% {
+    transform: translateY(0) scale(0.98);
+  }
+  60% {
+    transform: translateY(-6px) scale(1.02);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+.joy-bounce {
+  animation: joy-bounce 0.8s ease-out;
+}
+
+/* Blinking speech bubble for thirsty state */
+@keyframes pulse-bubble {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.04);
+    opacity: 0.85;
+  }
+}
+
+.pulse-bubble {
+  animation: pulse-bubble 1.4s ease-in-out infinite;
+}
+
+/* LED pulse */
+@keyframes led-glow {
+  0%,
+  100% {
+    filter: brightness(1) drop-shadow(0 0 6px currentColor);
+  }
+  50% {
+    filter: brightness(1.5) drop-shadow(0 0 14px currentColor);
+  }
+}
+
+.led-on {
+  animation: led-glow 0.9s ease-in-out infinite;
+}
+
+/* Floating decorative blobs */
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(8px, -10px) rotate(3deg);
+  }
+}
+
+.float-slow {
+  animation: float-slow 9s ease-in-out infinite;
+}
+
+@keyframes float-slower {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(-10px, 8px) rotate(-4deg);
+  }
+}
+
+.float-slower {
+  animation: float-slower 13s ease-in-out infinite;
+}
+
+/* Sway for leaves */
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(-2deg);
+  }
+  50% {
+    transform: rotate(2deg);
+  }
+}
+
+.sway {
+  animation: sway 4s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+/* Hide scrollbars inside app */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Range input styling for dev panel */
+.dev-range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #c87f5a, #4a6b4d);
+  outline: none;
+}
+.dev-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 3px solid #4a6b4d;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+.dev-range::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 3px solid #4a6b4d;
+  cursor: pointer;
+}

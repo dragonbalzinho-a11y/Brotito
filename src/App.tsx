@@ -29,6 +29,14 @@ function getLevelInfo(totalXp: number) {
   return { level, xpRemaining, xpForNextLevel };
 }
 
+function getLevelTitle(level: number) {
+  if (level >= 10) return 'Mestre das Plantas';
+  if (level >= 7) return 'Guardião Verde';
+  if (level >= 4) return 'Jardineiro';
+  if (level >= 2) return 'Cuidador';
+  return 'Primeiro Broto';
+}
+
 function useIsTouchDevice() {
   const [isTouch, setIsTouch] = useState(false);
   useEffect(() => {
@@ -60,6 +68,7 @@ export default function App() {
   }, [xp]);
 
   const { level: nivel, xpRemaining, xpForNextLevel } = getLevelInfo(xp);
+  const tituloNivel = getLevelTitle(nivel);
 
   // Consumo automático de água (1% a cada 5 segundos)
   useEffect(() => {
@@ -91,10 +100,10 @@ export default function App() {
 
   // Força uma frase de agradecimento quando rega
   const regar = () => {
-    const reward = umidade < 40 ? 20 : umidade <= 80 ? 8 : 2;
+    const reward = umidade < 40 ? 25 : umidade <= 80 ? 12 : 0;
     setUmidade((value) => Math.min(75, value + 25));
     setXp((value) => value + reward);
-    setXpGain(reward);
+    setXpGain(reward > 0 ? reward : null);
     setTimeout(() => setXpGain(null), 1400);
     setWaterTrigger((value) => value + 1);
     setFraseAtual(
@@ -130,6 +139,7 @@ export default function App() {
             level={nivel}
             xpForNextLevel={xpForNextLevel}
             xpGain={xpGain}
+            levelTitle={tituloNivel}
           />
         </div>
 

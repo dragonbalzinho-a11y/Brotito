@@ -64,7 +64,7 @@ export function BrotitoAvatar({
 function PlantIllustration({ plant }: { plant: PlantId }) {
   if (plant === 'espada') {
     return (
-      <svg viewBox="0 0 180 180" className="h-full w-full" aria-hidden="true">
+      <svg viewBox="0 0 180 180" className="h-full w-full sway" aria-hidden="true">
         <defs>
           <linearGradient id="sansevieria" x1="0" x2="1">
             <stop stopColor="#527d59" />
@@ -88,7 +88,7 @@ function PlantIllustration({ plant }: { plant: PlantId }) {
 
   if (plant === 'abacaxi') {
     return (
-      <svg viewBox="0 0 180 180" className="h-full w-full" aria-hidden="true">
+      <svg viewBox="0 0 180 180" className="h-full w-full sway" aria-hidden="true">
         <defs>
           <linearGradient id="pineapple" x1="0" x2="1" y1="0" y2="1">
             <stop stopColor="#f0c45e" />
@@ -110,7 +110,7 @@ function PlantIllustration({ plant }: { plant: PlantId }) {
   }
 
   return (
-    <svg viewBox="0 0 180 180" className="h-full w-full" aria-hidden="true">
+    <svg viewBox="0 0 180 180" className="h-full w-full sway" aria-hidden="true">
       <defs>
         <linearGradient id="monstera" x1="0" x2="1" y1="0" y2="1">
           <stop stopColor="#76aa6b" />

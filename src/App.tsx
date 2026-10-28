@@ -37,16 +37,6 @@ function getLevelTitle(level: number) {
   return 'Primeiro Broto';
 }
 
-function useIsTouchDevice() {
-  const [isTouch, setIsTouch] = useState(false);
-  useEffect(() => {
-    const check = () =>
-      'ontouchstart' in window || navigator.maxTouchPoints > 0;
-    setIsTouch(check());
-  }, []);
-  return isTouch;
-}
-
 export default function App() {
   const [abaAtiva, setAbaAtiva] = useState<TabId>(2);
   const [umidade, setUmidade] = useState(72);
@@ -61,7 +51,6 @@ export default function App() {
   const [fraseAtual, setFraseAtual] = useState(FRASES_FELIZ[0]);
   const [fraseVisivel, setFraseVisivel] = useState(true);
 
-  const isTouch = useIsTouchDevice();
 
   useEffect(() => {
     localStorage.setItem('brotito_xp', xp.toString());
@@ -123,64 +112,43 @@ export default function App() {
     return fraseAtual;
   };
 
-  const screen = (
-    <div
-      className="relative flex flex-col bg-sage-bg overflow-hidden select-none"
-      style={{ height: isTouch ? '100dvh' : '100%' }}
-    >
-      <WaterBackground />
-
-      <div className="relative z-10 flex flex-col flex-1 min-h-0">
-        <Header />
-
-        <div className="px-4 flex justify-center -mt-1">
-          <XpBadge
-            xp={xpRemaining}
-            level={nivel}
-            xpForNextLevel={xpForNextLevel}
-            xpGain={xpGain}
-            levelTitle={tituloNivel}
-          />
-        </div>
-
-        <main className="flex-1 min-h-0 relative overflow-hidden">
-          {abaAtiva === 2 && (
-            <TabStatus
-              moisture={umidade}
-              onWater={regar}
-              waterTrigger={waterTrigger}
-              plant={plantaSelecionada}
-              customPhrase={obterFraseFinal()}
-            />
-          )}
-          {abaAtiva === 1 && (
-            <TabPlants selected={plantaSelecionada} onSelect={setPlantaSelecionada} />
-          )}
-          {abaAtiva === 3 && <TabHardware moisture={umidade} />}
-        </main>
-
-        <DevPanel moisture={umidade} onChange={setUmidade} />
-        <BottomNav active={abaAtiva} onChange={setAbaAtiva} />
-      </div>
-    </div>
-  );
-
-  if (isTouch) {
-    return screen;
-  }
-
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-sage-800 via-sage-700 to-forest flex items-center justify-center p-6">
-      <div className="flex flex-col items-center gap-4">
-        <div className="relative w-[390px] h-[844px] rounded-[3rem] bg-black shadow-2xl border-[10px] border-black overflow-hidden">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 z-50 w-32 h-6 bg-black rounded-b-2xl" />
-          <div className="absolute inset-0 rounded-[2.4rem] overflow-hidden">
-            {screen}
+    <div className="min-h-screen w-full bg-gradient-to-br from-sage-800 via-sage-700 to-forest flex items-stretch justify-center sm:p-6">
+      <div className="relative flex w-full flex-col overflow-hidden bg-sage-bg shadow-2xl sm:max-w-md sm:rounded-[2rem] sm:my-6 select-none h-[100dvh] sm:h-[calc(100dvh-3rem)] sm:min-h-[640px]">
+        <WaterBackground />
+
+        <div className="relative z-10 flex flex-col flex-1 min-h-0">
+          <Header />
+
+          <div className="px-4 flex justify-center -mt-1">
+            <XpBadge
+              xp={xpRemaining}
+              level={nivel}
+              xpForNextLevel={xpForNextLevel}
+              xpGain={xpGain}
+              levelTitle={tituloNivel}
+            />
           </div>
+
+          <main className="flex-1 min-h-0 relative overflow-hidden">
+            {abaAtiva === 2 && (
+              <TabStatus
+                moisture={umidade}
+                onWater={regar}
+                waterTrigger={waterTrigger}
+                plant={plantaSelecionada}
+                customPhrase={obterFraseFinal()}
+              />
+            )}
+            {abaAtiva === 1 && (
+              <TabPlants selected={plantaSelecionada} onSelect={setPlantaSelecionada} />
+            )}
+            {abaAtiva === 3 && <TabHardware moisture={umidade} />}
+          </main>
+
+          <DevPanel moisture={umidade} onChange={setUmidade} />
+          <BottomNav active={abaAtiva} onChange={setAbaAtiva} />
         </div>
-        <p className="text-sage-200/80 text-xl font-hand">
-          Brotito — demonstração no navegador
-        </p>
       </div>
     </div>
   );
